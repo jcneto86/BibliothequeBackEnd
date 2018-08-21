@@ -1,15 +1,21 @@
 package bibliotheque;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
+
+import model.Utilisateur;
 
 public class FonctionsBibli {
 
     /* longin */
-    public static void validerUtilisateur() {
-
+    public static boolean validerUtilisateur(String idUtilisateur) {
+        return false;
     }
 
-    public static boolean validerMotDePasse() {
+    public static boolean validerMotDePasse(String motDePasse) {
         return false;
     }
 
@@ -20,6 +26,23 @@ public class FonctionsBibli {
     }
 
     public static LinkedList<Livre> rechercheLivre() {
+        Livre f = new Livre();
+        try {
+            ResultSet result = this.connect.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE
+            ).executeQuery(
+                    "select * from filme where id_filme = " + id
+            );
+            if (result.first()) {
+                f = new Film(id,
+                        result.getString("titulo"),
+                        result.getString("descricao"),
+                        result.getInt("ano"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -37,18 +60,71 @@ public class FonctionsBibli {
 
     public static void creerUtilisateur() {
 
+
     }
 
     public static void creerLivre() {
 
     }
 
-    public static Livre enregistrerUtilisateur(Utilisateur utilisateur) {
-        return null;
+    public static Utilisateur enregistrerUtilisateur(Utilisateur utilisateur) {
+        try {
+            PreparedStatement prepare =
+                    this.connect
+                            .prepareStatement(
+                                    "insert into filme "
+                                            + "(titulo, "
+                                            + "descricao, ano) "
+                                            + "values (?, ?, ?)"
+                                    , Statement.RETURN_GENERATED_KEYS);
+
+            prepare.setString(1, utilisateur.getTitulo());
+            prepare.setString(2, utilisateur.getDescricao());
+            prepare.setInt(3, utilisateur.getAno());
+
+
+            prepare.executeUpdate();
+
+
+            ResultSet rs = prepare.getGeneratedKeys();
+            if (rs.next()) {
+                utilisateur.setId_filme(rs.getInt(1));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return utilisateur;
     }
 
     public static Livre enregistrerLivre(Livre livre) {
-        return null;
+        try {
+            PreparedStatement prepare =
+                    this.connect
+                            .prepareStatement(
+                                    "insert into filme "
+                                            + "(titulo, "
+                                            + "descricao, ano) "
+                                            + "values (?, ?, ?)"
+                                    , Statement.RETURN_GENERATED_KEYS);
+
+            prepare.setString(1, livre.getTitulo());
+            prepare.setString(2, livre.getDescricao());
+            prepare.setInt(3, livre.getAno());
+
+
+            prepare.executeUpdate();
+
+
+            ResultSet rs = prepare.getGeneratedKeys();
+            if (rs.next()) {
+                livre.setId_filme(rs.getInt(1));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return livre;
     }
 
     public static void modifierUtilisateur() {
