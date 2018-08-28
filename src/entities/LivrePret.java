@@ -3,7 +3,7 @@ package entities;
 public class LivrePret {
 
     private int id_pret;  // INT NOT NULL,
-    private int id_livre;  // INT NOT NULL,
+    private int id_exemplaire;  // INT NOT NULL,
     private int id_utilisateur; // INT NOT NULL,
 
     public int getId_pret() {
@@ -14,12 +14,12 @@ public class LivrePret {
         this.id_pret = id_pret;
     }
 
-    public int getId_livre() {
-        return id_livre;
+    public int getId_exemplaire() {
+        return id_exemplaire;
     }
 
-    public void setId_livre(int id_livre) {
-        this.id_livre = id_livre;
+    public void setId_exemplaire(int id_exemplaire) {
+        this.id_exemplaire = id_exemplaire;
     }
 
     public int getId_utilisateur() {

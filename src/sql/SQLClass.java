@@ -18,7 +18,7 @@ public class SQLClass {
     private static String ip = "localhost";
     //private static String ip = "10.0.2.2";  // for Android
     private static String port="3306";
-    private static String db ="";
+    private static String db ="biblioteque";
     private static String user="root";
     private static String password ="root";
     private static boolean autoCommit=true;
