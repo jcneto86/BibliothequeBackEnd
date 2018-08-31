@@ -1,38 +1,26 @@
 package net_biblio;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
-public class Employé {
-
-	private JFrame frame;
+public class EmployeView extends JFrame {
 
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Employé window = new Employé();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private static final long serialVersionUID = 1L;
+	private JFrame frame;
+
+
 
 	/**
 	 * Create the application.
 	 */
-	public Employé() {
+	public EmployeView() {
 		initialize();
 	}
 
