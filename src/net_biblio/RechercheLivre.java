@@ -1,7 +1,5 @@
 package net_biblio;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -9,27 +7,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 
-public class RechercheLivre {
+public class RechercheLivre extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JTextField textField_1;
 	private JTable table;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RechercheLivre window = new RechercheLivre();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the application.
@@ -43,12 +31,12 @@ public class RechercheLivre {
 	 */
 	private void initialize() {
 		frame = new JFrame("Rechercher un Livre");
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 580, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(123, 43, 306, 26);
+		textField_1.setBounds(123, 43, 432, 26);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		
@@ -62,7 +50,7 @@ public class RechercheLivre {
 		frame.getContentPane().add(btnNewButton);
 		
 		table = new JTable();
-		table.setBounds(25, 81, 404, 138);
+		table.setBounds(25, 81, 530, 138);
 		frame.getContentPane().add(table);
 		
 		JButton btnNewButton1 = new JButton("<< Retour");

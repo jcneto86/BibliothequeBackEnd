@@ -1,6 +1,5 @@
 package net_biblio;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -9,25 +8,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 
-public class AcceuiAdmin {
-
-	private JFrame frame;
+public class AcceuiAdmin extends JFrame {
 
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AcceuiAdmin window = new AcceuiAdmin();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private static final long serialVersionUID = 1L;
+	public JFrame frame;
+
+
 
 	/**
 	 * Create the application.
@@ -39,7 +28,7 @@ public class AcceuiAdmin {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame("Acceuil/Admin");
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

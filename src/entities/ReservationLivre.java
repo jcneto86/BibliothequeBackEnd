@@ -1,15 +1,15 @@
 package entities;
 
-import java.sql.SQLData;
+import java.time.LocalDate;
 
 public class ReservationLivre {
     private int id_reservation_livre; // INT NOT NULL,
     private int id_exemplaire; // INT NOT NULL,
     private int id_utilisateur; // INT NOT NULL,
-    private SQLData date; // DATE NULL,
+    private LocalDate date; // DATE NULL,
     private byte complete; // BINARY(1) NULL,
     
-	public ReservationLivre(int id_reservation_livre, int id_exemplaire, int id_utilisateur, SQLData date) {
+	public ReservationLivre(int id_reservation_livre, int id_exemplaire, int id_utilisateur, LocalDate date) {
 		super();
 		this.id_reservation_livre = id_reservation_livre;
 		this.id_exemplaire = id_exemplaire;
@@ -66,7 +66,7 @@ public class ReservationLivre {
 
 
 
-	public SQLData getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
@@ -75,7 +75,7 @@ public class ReservationLivre {
 
 
 
-	public void setDate(SQLData date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

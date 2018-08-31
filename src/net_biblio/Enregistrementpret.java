@@ -1,8 +1,6 @@
 package net_biblio;
 
 import java.awt.Color;
-import java.awt.EventQueue;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,8 +8,12 @@ import javax.swing.JTextField;
 import java.awt.Font;
 
 
-public class Enregistrementpret {
+public class Enregistrementpret extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -19,21 +21,6 @@ public class Enregistrementpret {
 	private JTextField textField_3;
 	private JTextField txtJjj;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Enregistrementpret window = new Enregistrementpret();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.

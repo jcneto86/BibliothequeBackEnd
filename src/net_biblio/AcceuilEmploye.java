@@ -3,14 +3,18 @@ package net_biblio;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 
-public class AcceuilEmployé {
 
-	private JFrame frame;
+public class AcceuilEmploye extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -19,7 +23,7 @@ public class AcceuilEmployé {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AcceuilEmployé window = new AcceuilEmployé();
+					AcceuilEmploye window = new AcceuilEmploye();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +35,7 @@ public class AcceuilEmployé {
 	/**
 	 * Create the application.
 	 */
-	public AcceuilEmployé() {
+	public AcceuilEmploye() {
 		initialize();
 	}
 

@@ -1,6 +1,6 @@
 package entities;
 
-import java.sql.SQLData;
+import java.time.LocalDate;
 
 public class ConsultationSurPlace {
 
@@ -8,11 +8,10 @@ public class ConsultationSurPlace {
 	private int id_utilisateur; // INT NOT NULL,
 	private int id_exemplaire; // INT NOT NULL,
 	private int employe; // id_utilisateur,
-	private SQLData data; // DATETIME NOT NULL,
+	private LocalDate data; // DATETIME NOT NULL,
 	private String periode; // VARCHAR(15) NOT NULL,
 
-	public ConsultationSurPlace(int id_consultation_sur_place, int id_utilisateur, int id_exemplaire, int employe,
-			SQLData data, String periode) {
+	public ConsultationSurPlace(int id_consultation_sur_place, int id_utilisateur, int id_exemplaire, int employe, LocalDate data, String periode) {
 		super();
 		this.id_consultation_sur_place = id_consultation_sur_place;
 		this.id_utilisateur = id_utilisateur;
@@ -86,7 +85,7 @@ public class ConsultationSurPlace {
 
 
 
-	public SQLData getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
@@ -94,7 +93,7 @@ public class ConsultationSurPlace {
 
 
 
-	public void setData(SQLData data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 
