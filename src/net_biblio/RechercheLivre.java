@@ -13,7 +13,7 @@ public class RechercheLivre extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField textField_1;
 	private JTable table;
 

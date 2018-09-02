@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class enregistrementRetour extends JFrame {
+public class EnregistrementRetour extends JFrame {
 
 	/**
 	 * 
@@ -26,7 +26,7 @@ public class enregistrementRetour extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public enregistrementRetour() {
+	public EnregistrementRetour() {
 		initialize();
 	}
 

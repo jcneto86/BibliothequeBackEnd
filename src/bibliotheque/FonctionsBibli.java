@@ -61,7 +61,23 @@ public class FonctionsBibli {
     }
 
     /* fin longin */
-
+    public boolean verifierDisponibilite(int id_exemplaire) {
+        SQLClass.connect();
+        try {
+            ResultSet rs = SQLClass.executeQuery("SELECT COUNT(*) as nbRegist\n" + "FROM pret\n" + "JOIN livre_pret ON livre_pret.id_pret = pret.id_pret\n" + "JOIN EXEMPLAIRE ON EXEMPLAIRE.id_exemplaire = livre_pret.id_exemplaire \n" + "where pret.retourne = 0 AND EXEMPLAIRE.id_exemplaire = " + id_exemplaire + ";");
+            int nbRegist = rs.getInt("nbRegist");
+            if (nbRegist == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            SQLClass.close();
+        }
+        return false;
+    }
 
     public static ArrayList<Livre> rechercheLivre(String titreLivreOuNomAuteur) {
         ArrayList<Livre> livres = new ArrayList<Livre>();
@@ -124,12 +140,7 @@ public class FonctionsBibli {
     public static void faireConsultationSurPlace(ConsultationSurPlace consultationSurPlace) {
         SQLClass.connect();
         try {
-            SQLClass.executeUpdate("INSERT INTO CONSULTATION_SUR_PLACE VALUES "
-                    + "(NULL, " + consultationSurPlace.getId_utilisateur()
-                    + " , " + consultationSurPlace.getId_utilisateur()
-                    + ", " + consultationSurPlace.getEmploye()
-                    + ", '" + consultationSurPlace.getData()
-                    + "', '" + consultationSurPlace.getPeriode() + "' );");
+            SQLClass.executeUpdate("INSERT INTO CONSULTATION_SUR_PLACE VALUES " + "(NULL, " + consultationSurPlace.getId_utilisateur() + " , " + consultationSurPlace.getId_utilisateur() + ", " + consultationSurPlace.getEmploye() + ", '" + consultationSurPlace.getData() + "', '" + consultationSurPlace.getPeriode() + "' );");
             SQLClass.commit();
         } catch (Exception e) {
             SQLClass.rollback();
@@ -296,21 +307,8 @@ public class FonctionsBibli {
     public static void modifierUtilisateur(Utilisateur user, Adresse adresse) {
         SQLClass.connect();
         try {
-            SQLClass.executeUpdate("UPDATE utilisateur\n"
-                    + "SET id_adresse = '" + adresse.getId_adresse() + "', \n"
-                    + "nom = '" + user.getNom() + "', \n"
-                    + "nom_de_famille = '" + user.getNom_de_famille() + "', \n"
-                    + "email = '" + user.getEmail() + "', \n"
-                    + "password = AES_ENCRYPT('" + user.getPassword() + "', '" + user.getPassword() + "'), \n"
-                    + "telephone = '" + user.getTelephone() + "', \n"
-                    + "permission = '" + user.getPermission() + "'\n"
-                    + "where id_utilisateur = " + user.getId_utilisateur() + ";");
-            SQLClass.executeUpdate("UPDATE adresse \n"
-                    + "SET coordonner = '" + adresse.getCoordonner() + "',\n"
-                    + "nb = '" + adresse.getNb() + "', \n"
-                    + "codepostal = '" + adresse.getCodepostal() + "', \n"
-                    + "complement = '" + adresse.getComplement() + "'\n"
-                    + "where id_adresse = " + adresse.getId_adresse() + ";");
+            SQLClass.executeUpdate("UPDATE utilisateur\n" + "SET id_adresse = '" + adresse.getId_adresse() + "', \n" + "nom = '" + user.getNom() + "', \n" + "nom_de_famille = '" + user.getNom_de_famille() + "', \n" + "email = '" + user.getEmail() + "', \n" + "password = AES_ENCRYPT('" + user.getPassword() + "', '" + user.getPassword() + "'), \n" + "telephone = '" + user.getTelephone() + "', \n" + "permission = '" + user.getPermission() + "'\n" + "where id_utilisateur = " + user.getId_utilisateur() + ";");
+            SQLClass.executeUpdate("UPDATE adresse \n" + "SET coordonner = '" + adresse.getCoordonner() + "',\n" + "nb = '" + adresse.getNb() + "', \n" + "codepostal = '" + adresse.getCodepostal() + "', \n" + "complement = '" + adresse.getComplement() + "'\n" + "where id_adresse = " + adresse.getId_adresse() + ";");
             SQLClass.commit();
         } catch (Exception e) {
             SQLClass.rollback();
@@ -325,44 +323,15 @@ public class FonctionsBibli {
         SQLClass.connect();
         try {
             // auteur
-            SQLClass.executeUpdate("UPDATE auteur\n"
-                    + "set id_auteur = '" + auteur.getId_auteur()+ "', \n"
-                    + "nomAuteur = '" + auteur.getNomAuteur() + "'\n"
-                    + " where id_auteur = " + auteur.getId_auteur() + ";");
+            SQLClass.executeUpdate("UPDATE auteur\n" + "set id_auteur = '" + auteur.getId_auteur() + "', \n" + "nomAuteur = '" + auteur.getNomAuteur() + "'\n" + " where id_auteur = " + auteur.getId_auteur() + ";");
             // edition
-            SQLClass.executeUpdate("UPDATE edition\n"
-                    + "SET id_edition = '" + edition.getId_edition() + "', \n"
-                    + "id_maison_edition = '" + maisonEdition.getId_maison_edition() + "', \n"
-                    + "id_oeuvre_litteraire = '" + oevreLitteraire.getId_oeuvre_litteraire() + "', \n"
-                    + "annee = '" + edition.getAnnee() + "', \n"
-                    + "edition = '" + edition.getEdition() + "', \n"
-                    + "nb_pages = '"+ edition.getNb_pages() + "', \n"
-                    + "isbn = '" + edition.getIsbn() + "', \n"
-                    + "description = '" + edition.getDescription() + "', \n"
-                    + "rarete = '" + edition.getRarete() + "'\n"
-                    + "WHERE id_edition = " + edition.getId_edition() + ";");
+            SQLClass.executeUpdate("UPDATE edition\n" + "SET id_edition = '" + edition.getId_edition() + "', \n" + "id_maison_edition = '" + maisonEdition.getId_maison_edition() + "', \n" + "id_oeuvre_litteraire = '" + oevreLitteraire.getId_oeuvre_litteraire() + "', \n" + "annee = '" + edition.getAnnee() + "', \n" + "edition = '" + edition.getEdition() + "', \n" + "nb_pages = '" + edition.getNb_pages() + "', \n" + "isbn = '" + edition.getIsbn() + "', \n" + "description = '" + edition.getDescription() + "', \n" + "rarete = '" + edition.getRarete() + "'\n" + "WHERE id_edition = " + edition.getId_edition() + ";");
             // oevreLitteraire
-            SQLClass.executeUpdate("UPDATE oeuvre_litteraire\n"
-                    + "set id_oeuvre_litteraire = '" + oevreLitteraire.getId_oeuvre_litteraire() + "', \n"
-                    + "id_auteur = '"+ auteur.getId_auteur() + "', \n"
-                    + "titre = '" + oevreLitteraire.getTitre() + "', \n"
-                    + "langue_originale = '" + oevreLitteraire.getLangue_originale() + "', \n"
-                    + "annee = '"+ oevreLitteraire.getAnnee() + "'\n"
-                    + " where id_oeuvre_litteraire = "+ oevreLitteraire.getId_oeuvre_litteraire() +";");
+            SQLClass.executeUpdate("UPDATE oeuvre_litteraire\n" + "set id_oeuvre_litteraire = '" + oevreLitteraire.getId_oeuvre_litteraire() + "', \n" + "id_auteur = '" + auteur.getId_auteur() + "', \n" + "titre = '" + oevreLitteraire.getTitre() + "', \n" + "langue_originale = '" + oevreLitteraire.getLangue_originale() + "', \n" + "annee = '" + oevreLitteraire.getAnnee() + "'\n" + " where id_oeuvre_litteraire = " + oevreLitteraire.getId_oeuvre_litteraire() + ";");
             // maisonEdition
-            SQLClass.executeUpdate("UPDATE maison_edition\n"
-                    + "SET id_maison_edition = '" + maisonEdition.getId_maison_edition() + "', \n"
-                    + "nom = '" + maisonEdition.getNom() + "'\n"
-                    + "WHERE id_maison_edition = " + maisonEdition.getId_maison_edition() + ";");
+            SQLClass.executeUpdate("UPDATE maison_edition\n" + "SET id_maison_edition = '" + maisonEdition.getId_maison_edition() + "', \n" + "nom = '" + maisonEdition.getNom() + "'\n" + "WHERE id_maison_edition = " + maisonEdition.getId_maison_edition() + ";");
             // localizationLivre
-            SQLClass.executeUpdate("UPDATE localization_livre \n"
-                    + "SET id_localization_livre = '" + localizationLivre.getId_localization_livre() + "',\n"
-                    + "corridor = '" + localizationLivre.getCorridor() + "', \n"
-                    + "cote = '" + localizationLivre.getCote() + "', \n"
-                    + "rangee = '" + localizationLivre.getRangee() + "', \n"
-                    + "rayon = '" + localizationLivre.getRayon() + "', \n"
-                    + "position = '" + localizationLivre.getPosition() + "' \n"
-                    + "WHERE id_localization_livre = " + localizationLivre.getId_localization_livre() + ";");
+            SQLClass.executeUpdate("UPDATE localization_livre \n" + "SET id_localization_livre = '" + localizationLivre.getId_localization_livre() + "',\n" + "corridor = '" + localizationLivre.getCorridor() + "', \n" + "cote = '" + localizationLivre.getCote() + "', \n" + "rangee = '" + localizationLivre.getRangee() + "', \n" + "rayon = '" + localizationLivre.getRayon() + "', \n" + "position = '" + localizationLivre.getPosition() + "' \n" + "WHERE id_localization_livre = " + localizationLivre.getId_localization_livre() + ";");
 
             SQLClass.commit();
         } catch (Exception e) {

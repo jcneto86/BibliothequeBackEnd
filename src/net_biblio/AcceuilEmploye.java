@@ -16,21 +16,21 @@ public class AcceuilEmploye extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public JFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AcceuilEmploye window = new AcceuilEmploye();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					AcceuilEmploye window = new AcceuilEmploye();
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.
@@ -51,6 +51,17 @@ public class AcceuilEmploye extends JFrame {
 		JButton ButtonRechercheLivre = new JButton("Recherche Livre");
 		ButtonRechercheLivre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+                EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        try {
+                            RechercheLivre window = new RechercheLivre();
+                            window.frame.setVisible(true);
+                            frame.dispose();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 			}
 		});
 		ButtonRechercheLivre.setHorizontalAlignment(SwingConstants.LEFT);
