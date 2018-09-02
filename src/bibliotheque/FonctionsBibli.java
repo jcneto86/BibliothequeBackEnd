@@ -67,23 +67,40 @@ public class FonctionsBibli {
         ArrayList<Livre> livres = new ArrayList<Livre>();
         SQLClass.connect();
         try {
-            ResultSet rs = SQLClass.executeQuery("SELECT OEUVRE_LITTERAIRE.ID_OEUVRE_LITTERAIRE, \n" + "OEUVRE_LITTERAIRE.TITRE, \n" + "AUTEUR.NOMAUTEUR, \n" + "EDITION.ANNEE, \n" + "EDITION.EDITION, \n" + "EDITION.NB_PAGES, \n" + "MAISON_EDITION.NOM, \n" + "LOCALIZATION_LIVRE.CORRIDOR, \n" + "LOCALIZATION_LIVRE.COTE, \n" + "LOCALIZATION_LIVRE.RANGEE, \n" + "LOCALIZATION_LIVRE.RAYON, \n" + "LOCALIZATION_LIVRE.POSITION, \n" + "EXEMPLAIRE.ID_EXEMPLAIRE\n" + "FROM OEUVRE_LITTERAIRE \n" + "JOIN AUTEUR ON AUTEUR.ID_AUTEUR = OEUVRE_LITTERAIRE.ID_AUTEUR \n" + "JOIN EDITION ON EDITION.ID_OEUVRE_LITTERAIRE = OEUVRE_LITTERAIRE.ID_OEUVRE_LITTERAIRE \n" + "JOIN MAISON_EDITION ON MAISON_EDITION.ID_MAISON_EDITION = EDITION.ID_MAISON_EDITION \n" + "JOIN EXEMPLAIRE ON EXEMPLAIRE.ID_EDITION = EDITION.ID_EDITION \n" + "JOIN LOCALIZATION_LIVRE ON LOCALIZATION_LIVRE.ID_LOCALIZATION_LIVRE = EXEMPLAIRE.ID_LOCALIZATION_LIVRE \n" + "\n" + "WHERE OEUVRE_LITTERAIRE.TITRE LIKE ('%" + titreLivreOuNomAuteur + "%') OR AUTEUR.NOMAUTEUR LIKE ('%" + titreLivreOuNomAuteur + "%')");
+            ResultSet rs = SQLClass.executeQuery("SELECT OEUVRE_LITTERAIRE.ID_OEUVRE_LITTERAIRE, \n"
+                    + "OEUVRE_LITTERAIRE.TITRE, \n"
+                    + "OEUVRE_LITTERAIRE.LANGUE_ORIGINALE, \n"
+                    + "OEUVRE_LITTERAIRE.ANNEE AS ANNEEOEUVRE, \n"
+                    + "AUTEUR.NOMAUTEUR, \n"
+                    + "AUTEUR.ID_AUTEUR, \n"
+                    + "EDITION.ANNEE AS ANNEEEDITION, \n"
+                    + "EDITION.EDITION, \n"
+                    + "EDITION.NB_PAGES, \n"
+                    + "EDITION.ID_EDITION, \n"
+                    + "EDITION.ISBN, \n"
+                    + "EDITION.DESCRIPTION, \n"
+                    + "EDITION.RARETE, \n"
+                    + "MAISON_EDITION.NOM, \n"
+                    + "MAISON_EDITION.ID_MAISON_EDITION, \n"
+                    + "LOCALIZATION_LIVRE.ID_LOCALIZATION_LIVRE, \n"
+                    + "LOCALIZATION_LIVRE.CORRIDOR, \n"
+                    + "LOCALIZATION_LIVRE.COTE, \n"
+                    + "LOCALIZATION_LIVRE.RANGEE, \n"
+                    + "LOCALIZATION_LIVRE.RAYON, \n"
+                    + "LOCALIZATION_LIVRE.POSITION, \n"
+                    + "EXEMPLAIRE.ID_EXEMPLAIRE\n"
+                    + "FROM OEUVRE_LITTERAIRE \n"
+                    + "JOIN AUTEUR ON AUTEUR.ID_AUTEUR = OEUVRE_LITTERAIRE.ID_AUTEUR \n"
+                    + "JOIN EDITION ON EDITION.ID_OEUVRE_LITTERAIRE = OEUVRE_LITTERAIRE.ID_OEUVRE_LITTERAIRE \n"
+                    + "JOIN MAISON_EDITION ON MAISON_EDITION.ID_MAISON_EDITION = EDITION.ID_MAISON_EDITION \n"
+                    + "JOIN EXEMPLAIRE ON EXEMPLAIRE.ID_EDITION = EDITION.ID_EDITION \n"
+                    + "JOIN LOCALIZATION_LIVRE ON LOCALIZATION_LIVRE.ID_LOCALIZATION_LIVRE = EXEMPLAIRE.ID_LOCALIZATION_LIVRE \n"
+                    + "WHERE OEUVRE_LITTERAIRE.TITRE LIKE ('%" + titreLivreOuNomAuteur + "%') OR AUTEUR.NOMAUTEUR LIKE ('%" + titreLivreOuNomAuteur + "%')");
             while (rs.next()) {
-                String titre = rs.getString("TITRE");
-                String nomauteur = rs.getString("NOMAUTEUR");
-                int annee = rs.getInt("ANNEE");
-                String edition = rs.getString("EDITION");
-                int nb_pages = rs.getInt("NB_PAGES");
-                String maison_edition = rs.getString("NOM");
-                String corridor = rs.getString("CORRIDOR");
-                String cote = rs.getString("COTE");
-                String rangee = rs.getString("RANGEE");
-                String rayon = rs.getString("RAYON");
-                String position = rs.getString("POSITION");
                 int id_exemplaire = rs.getInt("ID_EXEMPLAIRE");
-                Livre livre = new Livre(titre, nomauteur, annee, edition, nb_pages, maison_edition, corridor, cote, rangee, rayon, position, id_exemplaire);
+                Livre livre = new Livre();
+                livre = livre.getLivreById(id_exemplaire);
                 livres.add(livre);
-
             }
             return livres;
         } catch (Exception e) {
@@ -169,8 +186,17 @@ public class FonctionsBibli {
 
     }
 
-    public static void faireRetour() {
-
+    public static void faireRetour(Pret pret) {
+        SQLClass.connect();
+        try {
+            SQLClass.executeUpdate("UPDATE pret \n"
+                    + "SET retourne = " + pret.getRetourne() + " \n"
+                    + "WHERE id_pret = " + pret.getId_pret() + " ;");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            SQLClass.close();
+        }
     }
 
     public static void enregistrerUtilisateur(Utilisateur utilisateur, Adresse adresse) {

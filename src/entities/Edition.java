@@ -1,5 +1,9 @@
 package entities;
 
+import sql.SQLClass;
+
+import java.sql.ResultSet;
+
 public class Edition {
 
     private int id_edition; // INT NOT NULL AUTO_INCREMENT,
@@ -11,6 +15,58 @@ public class Edition {
     private String isbn; // VARCHAR(45) NOT NULL,
     private String description; // VARCHAR(45) NOT NULL,
     private byte rarete; // BINARY(1) NOT NULL,
+
+	public Edition() {
+	}
+
+	public Edition(int id_edition, int id_maison_edition, int id_oeuvre_litteraire, int annee, String edition, int nb_pages, String isbn, String description, byte rarete) {
+		this.id_edition = id_edition;
+		this.id_maison_edition = id_maison_edition;
+		this.id_oeuvre_litteraire = id_oeuvre_litteraire;
+		this.annee = annee;
+		this.edition = edition;
+		this.nb_pages = nb_pages;
+		this.isbn = isbn;
+		this.description = description;
+		this.rarete = rarete;
+	}
+
+	public Edition getEditionById(int id) {
+		Edition ed = null;
+		SQLClass.connect();
+		try {
+			ResultSet rs = SQLClass.executeQuery("SELECT id_edition, " +
+					"id_maison_edition, " +
+					"id_oeuvre_litteraire, " +
+					"annee, " +
+					"edition, " +
+					"nb_pages, " +
+					"isbn, " +
+					"description, " +
+					"rarete\n"
+					+ "FROM edition\n"
+					+ "where id_edition = "+ id+ ";");
+			while (rs.next()) {
+				int id_edition = rs.getInt("id_edition");
+				int id_maison_edition = rs.getInt("id_maison_edition");
+				int id_oeuvre_litteraire = rs.getInt("id_oeuvre_litteraire");
+				int annee = rs.getInt("annee");
+				String edition = rs.getString("edition");
+				int nb_pages = rs.getInt("nb_pages");
+				String isbn = rs.getString("isbn");
+				String description = rs.getString("description");
+				byte rarete = rs.getByte("rarete");
+				ed = new Edition(id_edition, id_maison_edition, id_oeuvre_litteraire, annee, edition, nb_pages, isbn, description, rarete);
+			}
+			return ed;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			SQLClass.close();
+		}
+		return ed;
+	}
+
 	@Override
 	public String toString() {
 		return "Edition [id_edition=" + id_edition + ", id_maison_edition=" + id_maison_edition

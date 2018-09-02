@@ -51,6 +51,32 @@ public class Utilisateur {
 			SQLClass.close();
 		}
 	}
+	 public Utilisateur getUtilisateurById (int id) {
+		Utilisateur utilisateur = null;
+		 SQLClass.connect();
+		 try {
+			 ResultSet rs = SQLClass.executeQuery("SELECT * \n" +
+					 "FROM UTILISATEUR \n" +
+					 "WHERE ID_UTILISATEUR = " + id + "'"
+			 );
+			 while ( rs.next() ) {
+				 int id_utilisateur = rs.getInt("id_utilisateur");
+				 int id_adresse = rs.getInt("id_adresse");
+				 String nom = rs.getString("nom");
+				 String nom_de_famille = rs.getString("nom_de_famille");
+				 String email = rs.getString("email");
+				 String telephone = rs.getString("telephone");
+				 String permission = rs.getString("permission");
+				 utilisateur = new Utilisateur(id_utilisateur, id_adresse, nom, nom_de_famille, email, telephone, permission);
+			 }
+			 return utilisateur;
+		 } catch( Exception e ) {
+			 e.printStackTrace();
+		 } finally {
+			 SQLClass.close();
+		 }
+		 return utilisateur;
+	 }
 
 	public String getPassword() {
 		return password;

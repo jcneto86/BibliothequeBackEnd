@@ -1,16 +1,21 @@
 package entities;
 
+import sql.SQLClass;
+
+import java.sql.*;
 import java.time.LocalDate;
 
 public class Pret {
-    private int id_pret; //INT NOT NULL AUTO_INCREMENT,
-    private int employe; //INT NOT NULL,
-    private LocalDate date_retiree; //DATE NOT NULL,
-    private LocalDate date_retour; //DATE NOT NULL,
-    private byte retourne; //BINARY(1) NOT NULL,
-    
-    
-    
+    private int id_pret;
+    private int employe;
+    private LocalDate date_retiree;
+    private LocalDate date_retour;
+    private byte retourne;
+
+
+	public Pret() {
+	}
+
 	public Pret(int id_pret, int employe, LocalDate date_retiree, LocalDate date_retour) {
 		super();
 		this.id_pret = id_pret;
@@ -18,6 +23,28 @@ public class Pret {
 		this.date_retiree = date_retiree;
 		this.date_retour = date_retour;
 		this.retourne = 0;
+	}
+
+	public Pret getPretById(int id) {
+		Pret pret = null;
+		SQLClass.connect();
+		try {
+			ResultSet rs = SQLClass.executeQuery("SELECT id_pret, employe, date_retiree, date_retour  \n"
+					+ "FROM pret \n" + "where id_pret = "+ id+ ";");
+			while (rs.next()) {
+				int id_pret = rs.getInt("id_pret");
+				int employe = rs.getInt("employe");
+				LocalDate date_retiree = rs.getDate("date_retiree").toLocalDate();
+				LocalDate date_retour = rs.getDate("date_retour").toLocalDate();
+				pret = new Pret(id_pret, employe, date_retiree, date_retour);
+			}
+			return pret;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			SQLClass.close();
+		}
+		return pret;
 	}
 
 
